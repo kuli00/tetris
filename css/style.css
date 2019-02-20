@@ -2,12 +2,22 @@
 }
 
 .game {
-    width: 320px;
     height: 500px;
     background-color: #0f0;
-    margin: 10px auto;
 }
 
 .game-buttons {
     margin: 10px 0;
+}
+
+.game-options {
+    height: 500px;
+    padding: 10px;
+    background-color: #f00;
+}
+
+.timer-element {
+    display: inline;
+    padding: 0;
+    margin: 0;
 }
