@@ -5,7 +5,37 @@
     <title>Tetris</title>
 </head>
 <body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12 top-banner">
+                Tetris
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 game-container">
+                <div class="game" id="game">
+                    a
+                </div>
+                <div class="game-buttons">
+                    <button class="btn btn-primary btn-block">Start</button>
+                </div>
+                <div class="highscore">
+                    <table class="table highscore-table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Score</th>
+                            </tr>
+                        </thead>
+                        <tbody id="highscore-tbody" class="highscore-tbody">
 
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="js/game.js" />
 </body>
 </html>

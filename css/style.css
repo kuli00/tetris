@@ -1,0 +1,13 @@
+.game-container {
+}
+
+.game {
+    width: 320px;
+    height: 500px;
+    background-color: #0f0;
+    margin: 10px auto;
+}
+
+.game-buttons {
+    margin: 10px 0;
+}
