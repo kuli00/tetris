@@ -1,17 +1,39 @@
 //init
+var gameBoard = new Array();
 var timer;
 var currentTime;
 var startTime;
 var seconds = 0;
 var minutes = 0;
 
+function generateGameBoard() {
+    $("#game").empty();
+    for (var i = 0; i < 12; i++) {
+        gameBoard.push([0, 0, 0, 0, 0, 0, 0, 0]);
+        let newRow = document.createElement("DIV");
+        newRow.className = "game-row";
+        for (var j = 0; j < 8; j++) {
+            let newDiv = document.createElement("DIV");
+            newDiv.className = "game-field";
+            const fieldId = i + "," + j;
+            newDiv.id = fieldId;
+            newDiv.height = "30px";// = newDiv.width;
+            //newDiv.textContent = "a";
+            newRow.append(newDiv);
+
+        }
+        $("#game").append(newRow);
+    }
+}
+
 function startGame() {
+    generateGameBoard();
     timerStart();
-    console.log("click")
 }
 
 function timerStart() {
     timerReset();
+    $(".btn-start").text("Reset");
     setInterval(function () {
         parseTimeUnits();
         currentTime = new Date;
@@ -25,7 +47,7 @@ function timerStart() {
 }
 
 function timerStop() {
-
+    console.log("a");
 }
 
 function timerReset() {

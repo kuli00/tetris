@@ -1,9 +1,12 @@
 .game-container {
+    margin: 0;
+    padding: 0;
 }
 
 .game {
-    height: 500px;
     background-color: #0f0;
+    padding: 0;
+    text-align: center;
 }
 
 .game-buttons {
@@ -11,7 +14,7 @@
 }
 
 .game-options {
-    height: 500px;
+    height: 585px;
     padding: 10px;
     background-color: #f00;
 }
@@ -20,4 +23,21 @@
     display: inline;
     padding: 0;
     margin: 0;
+}
+
+.game-field {
+    background-color: #ff0;
+    border: 1px solid #000;
+    width: 48.75px;
+    display:inline-block;
+    text-align: center;
+    content: "";
+    height: 48.75px;
+}
+
+.game-row {
+    width: 100%;
+    display: flex;
+    margin: 0;
+    padding: 0;
 }
