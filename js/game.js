@@ -11,6 +11,7 @@ var colors = [
     "#00ff00",
     "#0000ff",
     "#00ffff",
+    "#ff00ff",
 ];
 
 function generateGameBoard() {
@@ -106,7 +107,6 @@ function game() {
 
     let color;
     setInterval(function () {
-        let currentFigurePosition = new Array();
         if (currentFigurePlaced) {
             nextFigure = pickNewFigure();
             color = pickNewColor(oldColor);
@@ -172,11 +172,11 @@ function refreshGameBoard() {
 }
 
 function checkConflict(nextFigure) {
+    var tmp = true;
     for (let i = 3; i >= 0; i--){
-        for (let j = 0; j <= 3; j++) {
-            if (nextFigure[i][0] > gameBoard.length - 1) {
-                return false;
-            }
+        if (nextFigure[i][0] > gameBoard.length - 1) {
+            tmp = false;
         }
     }
+    return tmp;
 }
