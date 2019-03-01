@@ -26,7 +26,7 @@ class GameBoard {
     }
 
     drawSinglePoint(x, y, color) {
-        if(color === null) {color = "#00ff00";}
+        if(color === null) {color = "#ffffff";}
         let newPoint = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         const newPointId = x + "-" + y;
         newPoint.id = newPointId;
@@ -36,7 +36,9 @@ class GameBoard {
             "y": y * 50,
             "width": "50px",
             "height": "50px",
-            "fill": color
+            "fill": color,
+            "stroke": "black",
+            "stroke-width": 1,
         });
     }
 
@@ -90,11 +92,14 @@ class GameBoard {
     }
 
     checkHorizontalConflict(block, side) {
+        let tmp = [0, 0];
         for (let i = 0; i < 4; i++) {
-            if (block.points[i].x >= this.width - 1 || block.points[i].x < 0 || (
-                    this.points[block.points[i].y][block.points[i].x + side].placed === true
-                    )
-                ){
+            if (block.points[i].y < 0 &&
+                this.points[0][block.points[i].x + side].placed === false) {
+                return false;
+            } else if (block.points[i].y < 0 || block.points[i].x >= this.width ||
+                block.points[i].x < 0 ||
+                this.points[tmp[1]][block.points[i].x + side].placed === true) {
                 return true;
             }
         }
@@ -103,11 +108,54 @@ class GameBoard {
 
     placeFigure(block) {
         for(let i = 0; i < 4; i++) {
+            if(this.points[block.points[i].y] === undefined) {
+                alert("koniec gry");
+                resetGame();
+            }
             this.points[block.points[i].y][block.points[i].x].placed = true;
         }
     }
 
     pickNewFigure() {
         return figures[Math.floor(Math.random() * figures.length)];
+    }
+
+    pickNewColor(oldColor) {
+        let colorId = Math.floor(Math.random() * colors.length);
+        if (oldColor === null) {
+            return colors[colorId];
+        }
+        if (colors[colorId] === oldColor) {
+            pickNewColor(oldColor);
+        }
+        return colors[colorId];
+    }
+
+    checkFilledRow() {
+        for (let i = 0; i < this.height; i++) {
+            let tmp = 0;
+            for (let j = 0; j < this.width; j++) {
+                if (this.points[i][j].placed) {
+                    tmp++;
+                }
+            }
+            if(tmp === this.points[i].length) {
+                this.cleanRow(i);
+            }
+        }
+    }
+
+    cleanRow(rowId) {
+        for (let i = 0; i < this.width; i++) {
+            this.points[rowId][i].placed = false;
+            this.points[rowId][i].color = "#ffffff";
+        }
+        for (let i = rowId - 1; i >= 0; i--) {
+            for (let j = 0; j < this.points[rowId].length; j++) {
+                this.points[rowId][j].placed = this.points[rowId - 1][j].placed;
+                this.points[rowId][j].color = this.points[rowId - 1][j].color;
+            }
+        }
+        this.drawGameBoard();
     }
 }

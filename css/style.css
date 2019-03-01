@@ -3,10 +3,8 @@
     padding: 0;
 }
 
-.game {
-    background-color: #0f0;
-    padding: 0;
-    text-align: center;
+#gameBoard {
+    border: 1px solid black;
 }
 
 .game-buttons {

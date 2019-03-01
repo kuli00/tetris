@@ -1,5 +1,7 @@
 //init
-var gameBoard = new GameBoard(8, 12);
+let gameBoard;
+const width = 10;
+const height = 15;
 var timer;
 var currentTime;
 var startTime;
@@ -20,6 +22,10 @@ function startGame() {
     game();
 }
 
+$(document).ready(function () {
+    gameBoard = new GameBoard(8, 12);
+});
+
 function game() {
     let oldColor = null;
     let newFigure = true;
@@ -29,7 +35,7 @@ function game() {
     setInterval(function () {
         if (currentFigurePlaced) {
             nextFigure = null;
-            nextFigure = new Block(pickNewFigure(), pickNewColor());
+            nextFigure = new Block(gameBoard.pickNewFigure(), gameBoard.pickNewColor(oldColor));
             currentFigurePlaced = false;
         }
         if (!gameBoard.checkConflict(nextFigure)) {
@@ -39,6 +45,7 @@ function game() {
             gameBoard.drawGameBoard();
         } else {
             gameBoard.placeFigure(nextFigure);
+            gameBoard.checkFilledRow();
             currentFigurePlaced = true;
         }
     }, 500);
@@ -62,12 +69,8 @@ document.onkeydown = function(e) {
     gameBoard.drawGameBoard();
 }
 
-function changeStartButton() {
-    $(".btn-start").click(restartGame());
-}
-
-function restartGame() {
-    timerReset();
+function resetGame() {
+    window.location.reload();
 }
 
 function timerStart() {
