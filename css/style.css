@@ -26,7 +26,7 @@
 }
 
 .game-field {
-    background-color: #ff0;
+    background-color: #d3d3d3;
     border: 1px solid #000;
     width: 48.75px;
     display:inline-block;

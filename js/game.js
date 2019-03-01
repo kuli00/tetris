@@ -1,41 +1,73 @@
 //init
-var gameBoard = new Array();
+var gameBoard = new GameBoard(8, 12);
 var timer;
 var currentTime;
 var startTime;
 var seconds = 0;
 var minutes = 0;
+let nextFigure = null;
 
 var colors = [
     "#ff0000",
-    "#00ff00",
+    "#ffff00",
     "#0000ff",
     "#00ffff",
     "#ff00ff",
 ];
 
-function generateGameBoard() {
-    $("#game").empty();
-    for (var i = 0; i < 12; i++) {
-        gameBoard.push([0, 0, 0, 0, 0, 0, 0, 0]);
-        let newRow = document.createElement("DIV");
-        newRow.className = "game-row";
-        for (var j = 0; j < 8; j++) {
-            let newDiv = document.createElement("DIV");
-            newDiv.className = "game-field";
-            const fieldId = i + "_" + j;
-            newDiv.id = fieldId;
-            newRow.append(newDiv);
-
-        }
-        $("#game").append(newRow);
-    }
-}
-
 function startGame() {
-    generateGameBoard();
     timerStart();
     game();
+}
+
+function game() {
+    let oldColor = null;
+    let newFigure = true;
+    let currentFigurePlaced = true;
+
+    let color;
+    setInterval(function () {
+        if (currentFigurePlaced) {
+            nextFigure = null;
+            nextFigure = new Block(pickNewFigure(), pickNewColor());
+            currentFigurePlaced = false;
+        }
+        if (!gameBoard.checkConflict(nextFigure)) {
+            gameBoard.removeFigure(nextFigure);
+            nextFigure.moveDown();
+            gameBoard.mergeFigure(nextFigure);
+            gameBoard.drawGameBoard();
+        } else {
+            gameBoard.placeFigure(nextFigure);
+            currentFigurePlaced = true;
+        }
+    }, 500);
+}
+
+document.onkeydown = function(e) {
+    gameBoard.removeFigure(nextFigure);
+    switch(e.keyCode) {
+        case 37:
+            if (!gameBoard.checkHorizontalConflict(nextFigure, -1)) {
+                nextFigure.moveLeft();
+            }
+            break;
+        case 39:
+            if (!gameBoard.checkHorizontalConflict(nextFigure, 1)) {
+                nextFigure.moveRight();
+            }
+            break;
+    }
+    gameBoard.mergeFigure(nextFigure);
+    gameBoard.drawGameBoard();
+}
+
+function changeStartButton() {
+    $(".btn-start").click(restartGame());
+}
+
+function restartGame() {
+    timerReset();
 }
 
 function timerStart() {
@@ -59,6 +91,10 @@ function timerStop() {
 
 function timerReset() {
     startTime = new Date;
+    $(".timer-minutes").text("00");
+    $(".timer-seconds").text("00.000");
+    minutes = 0;
+    seconds = 0;
 }
 
 function timerUpdate() {
@@ -99,35 +135,13 @@ function pickNewColor(oldColor) {
     return colors[colorId];
 }
 
-function game() {
-    let oldColor = null;
-    let newFigure = true;
-    let nextFigure = new Array();
-    let currentFigurePlaced = true;
-
-    let color;
-    setInterval(function () {
-        if (currentFigurePlaced) {
-            nextFigure = pickNewFigure();
-            color = pickNewColor(oldColor);
-            currentFigurePlaced = false;
-        }
-        currentFigurePlaced = moveFigureDown(nextFigure, color);
-    }, 500);
-}
 
 
-function moveFigureDown(nextFigure, color) {
-    clearOldFigure(nextFigure);
+function figureFall(nextFigure) {
     for (let i = 3; i >=0; i--) {
         nextFigure[i][0] += 1;
     }
-    if(checkConflict(nextFigure) === false) {
-        return true;
-    }
-    printNewFigure(nextFigure, color);
-    refreshGameBoard();
-    return false;
+    return nextFigure;
 }
 
 function clearOldFigure(oldFigure) {
@@ -136,7 +150,7 @@ function clearOldFigure(oldFigure) {
             if (oldFigure[i][j] !== null) {
                 var y = oldFigure[i][0];
                 var x = oldFigure[i][j];
-                if (y >= 0) {
+                if (y >= 0 && y <= 11) {
                     gameBoard[y][x] = 0;
                 }
             }
@@ -147,10 +161,10 @@ function clearOldFigure(oldFigure) {
 function printNewFigure(nextFigure, color) {
     for (let i = 0; i <= 3; i++) {
         for (let j = 1; j <= 4; j++) {
-            if (nextFigure[i][j] !== null) {
+            if (nextFigure[i][j] !== null && nextFigure[i][0] >= 0) {
                 var x = nextFigure[i][j];
                 var y = nextFigure[i][0];
-                if (y >= 0) {
+                if (y >= 0 && y <= 11) {
                     gameBoard[y][x] = color;
                 }
             }
@@ -164,7 +178,7 @@ function refreshGameBoard() {
             var fieldId = "#" + i + "_" + j;
             var color = gameBoard[i][j];
             if (color === 0) {
-                color = "#ffff00";
+                color = "#d3d3d3";
             }
             $(fieldId).css("background-color", color);
         }
@@ -172,10 +186,18 @@ function refreshGameBoard() {
 }
 
 function checkConflict(nextFigure) {
-    var tmp = true;
+    var tmp = false;
     for (let i = 3; i >= 0; i--){
-        if (nextFigure[i][0] > gameBoard.length - 1) {
-            tmp = false;
+        if (nextFigure[i][0] > gameBoard.length) {
+            tmp = true;
+        }
+        else {
+            for (let j = 1; j <= 3; j++) {
+                if (gameBoard[nextFigure[i][0]][nextFigure[i][j]] !== undefined ||
+                    gameBoard[nextFigure[i][0]][nextFigure[i][j]] !== 0 ) {
+                    return false;
+                }
+            }
         }
     }
     return tmp;

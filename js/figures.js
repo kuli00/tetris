@@ -1,53 +1,151 @@
-var figure1 = [
-    [-4, null, 3, null, null],
-    [-3, null, 3, null, null],
-    [-2, null, 3, null, null],
-    [-1, null, 3, null, null],
-];
-
-var figure2 = [
-    [-4, null, null, null, null],
-    [-3, null, 3, null, null],
-    [-2, null, 3, 4, null],
-    [-1, null, null, 4, null],
-];
-var figure3 = [
-    [-4, null, null, null, null],
-    [-3, null, null, 4, null],
-    [-2, null, 3, 4, null],
-    [-1, null, 3, null, null],
-];
-var figure4 = [
-    [-4, null, null, null, null],
-    [-3, null, null, null, null],
-    [-2, null, 3, null, null],
-    [-1, null, 3, 4, 5],
-];
-var figure5 = [
-    [-4, null, null, null, null],
-    [-3, null, null, null, null],
-    [-2, null, null, null, 5],
-    [-1, null, 3, 4, 5],
-];
-var figure6 = [
-    [-4, null, null, null, null],
-    [-3, null, null, null, null],
-    [-2, null, null, 4, null],
-    [-1, null, 3, 4, 5],
-];
-var figure7 = [
-    [-4, null, null, null, null],
-    [-3, null, null, null, null],
-    [-2, null, 3, 4, null],
-    [-1, null, 3, 4, null],
-];
-
 var figures = [
-    figure1,
-    figure2,
-    figure3,
-    figure4,
-    figure5,
-    figure6,
-    figure7,
+    {
+        "points":[
+            {"x": 4, "y": -4},
+            {"x": 4, "y": -3},
+            {"x": 4, "y": -2},
+            {"x": 4, "y": -1},
+        ],
+        "permutations": [
+            [
+                {"x": 0, "y": -3},
+                {"x": 0, "y": -2},
+                {"x": 0, "y": -1},
+                {"x": 0, "y": 0},
+            ],
+            [
+                {"x": 0, "y": 0},
+                {"x": 0, "y": 1},
+                {"x": 0, "y": 2},
+                {"x": 0, "y": 3},
+            ],
+        ],
+    },
+    {
+        "points":[
+            {"x": 3, "y": -2},
+            {"x": 4, "y": -2},
+            {"x": 3, "y": -1},
+            {"x": 4, "y": -1},
+        ],
+        "permutations": [
+            [
+                {"x": 0, "y": 0},
+                {"x": 0, "y": 0},
+                {"x": 0, "y": 0},
+                {"x": 0, "y": 0},
+            ],
+        ],
+    },
+    {
+        "points":[
+            {"x": 3, "y": -3},
+            {"x": 3, "y": -2},
+            {"x": 4, "y": -2},
+            {"x": 4, "y": -1},
+        ],
+        "permutations": [
+            [
+                {"x": -3, "y": -1},
+                {"x": -2, "y": 0},
+                {"x": -1, "y": -1},
+                {"x": 0, "y": 0},
+            ],
+            [
+                {"x": 3, "y": 1},
+                {"x": 2, "y": 0},
+                {"x": 1, "y": 1},
+                {"x": 0, "y": 0},
+            ],
+        ],
+    },
+    {
+        "points":[
+            {"x": 4, "y": -3},
+            {"x": 4, "y": -2},
+            {"x": 3, "y": -2},
+            {"x": 3, "y": -1},
+        ],
+        "permutations": [
+            [
+                {"x": -3, "y": -1},
+                {"x": -2, "y": 0},
+                {"x": -1, "y": -1},
+                {"x": 0, "y": 0},
+            ],
+            [
+                {"x": 3, "y": 1},
+                {"x": 2, "y": 0},
+                {"x": 1, "y": 1},
+                {"x": 0, "y": 0},
+            ],
+        ],
+    },
+    {
+        "points":[
+            {"x": 3, "y": -2},
+            {"x": 3, "y": -1},
+            {"x": 4, "y": -1},
+            {"x": 5, "y": -1},
+        ],
+        "permutations": [
+            [
+                {"x": -3, "y": -1},
+                {"x": -2, "y": 0},
+                {"x": -1, "y": -1},
+                {"x": 0, "y": 0},
+            ],
+            [
+                {"x": 3, "y": 1},
+                {"x": 2, "y": 0},
+                {"x": 1, "y": 1},
+                {"x": 0, "y": 0},
+            ],
+        ],
+    },
+    {
+        "points":[
+            {"x": 3, "y": -2},
+            {"x": 4, "y": -1},
+            {"x": 5, "y": -1},
+            {"x": 5, "y": -1},
+        ],
+        "permutations": [
+            [
+                {"x": -3, "y": -1},
+                {"x": -2, "y": 0},
+                {"x": -1, "y": -1},
+                {"x": 0, "y": 0},
+            ],
+            [
+                {"x": 3, "y": 1},
+                {"x": 2, "y": 0},
+                {"x": 1, "y": 1},
+                {"x": 0, "y": 0},
+            ],
+        ],
+    },
+    {
+        "points":[
+            {"x": 3, "y": -1},
+            {"x": 4, "y": -1},
+            {"x": 4, "y": -2},
+            {"x": 5, "y": -1},
+        ],
+        "permutations": [
+            [
+                {"x": -3, "y": -1},
+                {"x": -2, "y": 0},
+                {"x": -1, "y": -1},
+                {"x": 0, "y": 0},
+            ],
+            [
+                {"x": 3, "y": 1},
+                {"x": 2, "y": 0},
+                {"x": 1, "y": 1},
+                {"x": 0, "y": 0},
+            ],
+        ],
+    },
 ];
+
