@@ -40,12 +40,12 @@ class Block {
 
     rotate() {
         this.currentRotation += 1;
-        if (this.currentRotation >= this.permutations.lenght) {
+        if (this.currentRotation >= this.permutations.length) {
             this.currentRotation = 0;
         }
-        for(let i = 0; i < this.points.lenght; i++) {
-            this.points[i].x += this.permutations[currentRotation][i].x;
-            this.points[i].y += this.permutations[currentRotation][i].y;
+        for(let i = 0; i < this.points.length; i++) {
+            this.points[i].x += this.permutations[this.currentRotation][i].x;
+            this.points[i].y += this.permutations[this.currentRotation][i].y;
         }
     }
 }

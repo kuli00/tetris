@@ -10,15 +10,26 @@ var minutes = 0;
 let nextFigure = null;
 
 var colors = [
+    "#00ffff",
+    "#808080",
+    "#000080",
+    "#c0c0c0",
+    "#000000",
+    "#008000",
+    "#808000",
+    "#008080",
+    "#0000ff",
+    "#00ff00",
+    "#800080",
+    "#ff00ff",
+    "#800000",
     "#ff0000",
     "#ffff00",
-    "#0000ff",
-    "#00ffff",
-    "#ff00ff",
 ];
 
 function startGame() {
     timerStart();
+    $("#startButton").attr("disabled", "disabled");
     game();
 }
 
@@ -35,7 +46,8 @@ function game() {
     setInterval(function () {
         if (currentFigurePlaced) {
             nextFigure = null;
-            nextFigure = new Block(gameBoard.pickNewFigure(), gameBoard.pickNewColor(oldColor));
+            oldColor =  gameBoard.pickNewColor(oldColor);
+            nextFigure = new Block(gameBoard.pickNewFigure(), oldColor);
             currentFigurePlaced = false;
         }
         if (!gameBoard.checkConflict(nextFigure)) {
@@ -51,7 +63,7 @@ function game() {
     }, 500);
 }
 
-document.onkeydown = function(e) {
+document.onkeyup = function(e) {
     gameBoard.removeFigure(nextFigure);
     switch(e.keyCode) {
         case 37:
@@ -63,6 +75,9 @@ document.onkeydown = function(e) {
             if (!gameBoard.checkHorizontalConflict(nextFigure, 1)) {
                 nextFigure.moveRight();
             }
+            break;
+        case 32:
+            nextFigure.rotate();
             break;
     }
     gameBoard.mergeFigure(nextFigure);

@@ -3,12 +3,13 @@ class GameBoard {
         this.width = width;
         this.height = height;
         this.points = this.cleanGameBoard(this.width, this.height);
+        this.defaultColor = "#ffffff";
     }
 
     drawGameBoard() {
         for (let i = 0; i < this.points.length; i++) {
             for (let j = 0; j < this.points[i].length; j++) {
-                this.drawSinglePoint(j, i, this.points[i][j].color);
+                this.drawSinglePoint(j, i, this.points[i][j].color, this.points[i][j].placed);
             }
         }
     }
@@ -25,8 +26,8 @@ class GameBoard {
         return points;
     }
 
-    drawSinglePoint(x, y, color) {
-        if(color === null) {color = "#ffffff";}
+    drawSinglePoint(x, y, color, pl) {
+        if(color === null) {color = this.defaultColor;}
         let newPoint = document.createElementNS("http://www.w3.org/2000/svg", "rect");
         const newPointId = x + "-" + y;
         newPoint.id = newPointId;
@@ -40,6 +41,17 @@ class GameBoard {
             "stroke": "black",
             "stroke-width": 1,
         });
+        let newTextPoint =document.createElementNS('ttp://www.w3.org/2000/svg', 'text');
+        newTextPoint.id = "t" + newPointId;
+        $("#gameBoard").append(newTextPoint);
+        $("#t" + newPointId).attr({
+            "x": x * 50,
+            "y": y * 50,
+            "fill": "#000000",
+            "font-size": 45,
+            "font-family": "Verdana",
+        });
+        $("#t" + newPointId).text(pl);
     }
 
     drawFigure(block) {
@@ -143,19 +155,24 @@ class GameBoard {
                 this.cleanRow(i);
             }
         }
+        this.drawGameBoard();
     }
 
     cleanRow(rowId) {
-        for (let i = 0; i < this.width; i++) {
+        for (let i = 0; i < this.points[rowId].length; i++) {
             this.points[rowId][i].placed = false;
-            this.points[rowId][i].color = "#ffffff";
+            this.points[rowId][i].color = this.defaultColor;
         }
         for (let i = rowId - 1; i >= 0; i--) {
             for (let j = 0; j < this.points[rowId].length; j++) {
-                this.points[rowId][j].placed = this.points[rowId - 1][j].placed;
-                this.points[rowId][j].color = this.points[rowId - 1][j].color;
+                if (i >= 0) {
+                    this.points[i][j].placed = this.points[i - 1][j].placed;
+                    this.points[i][j].color = this.points[i - 1][j].color;
+                } else {
+                    this.points[i][j].placed = false;
+                    this.points[i][j].color = null;
+                }
             }
         }
-        this.drawGameBoard();
     }
 }
