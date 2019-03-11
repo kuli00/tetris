@@ -163,9 +163,9 @@ class GameBoard {
             this.points[rowId][i].placed = false;
             this.points[rowId][i].color = this.defaultColor;
         }
-        for (let i = rowId - 1; i >= 0; i--) {
+        for (let i = rowId; i >= 0; i--) {
             for (let j = 0; j < this.points[rowId].length; j++) {
-                if (i >= 0) {
+                if (i > 0) {
                     this.points[i][j].placed = this.points[i - 1][j].placed;
                     this.points[i][j].color = this.points[i - 1][j].color;
                 } else {
